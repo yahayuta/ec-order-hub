@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: ec-order-hub
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/orderhub}
+    username: ${SPRING_DATASOURCE_USERNAME:orderhub}
+    password: ${SPRING_DATASOURCE_PASSWORD:orderhub}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+orderhub:
+  malls:
+    sakura:
+      base-url: ${SAKURA_BASE_URL:http://localhost:8080/mock/sakura}
+    komorebi:
+      base-url: ${KOMOREBI_BASE_URL:http://localhost:8080/mock/komorebi}
+  importing:
+    overlap: PT5M
+    max-attempts: 3
+    initial-backoff: PT1S
+  scheduler:
+    enabled: ${ORDERHUB_SCHEDULER_ENABLED:false}
+    interval-ms: 300000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

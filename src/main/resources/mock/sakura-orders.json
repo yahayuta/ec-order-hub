@@ -1,0 +1,36 @@
+[
+  {
+    "order_no": "SK-240001",
+    "ordered_at": "2026-10-01T09:12:00+09:00",
+    "updated_at": "2026-10-01T09:12:00+09:00",
+    "status": "NEW",
+    "shipping": {"prefecture": "神奈川県"},
+    "items": [
+      {"sku": "MUG-BLU-01", "qty": 2, "unit_price": 1980}
+    ],
+    "total": 3960
+  },
+  {
+    "order_no": "SK-240002",
+    "ordered_at": "2026-10-01T10:40:00+09:00",
+    "updated_at": "2026-10-01T10:40:00+09:00",
+    "status": "NEW",
+    "shipping": {"prefecture": "大阪府"},
+    "items": [
+      {"sku": "TOWEL-WHT-L", "qty": 3, "unit_price": 1200},
+      {"sku": "TOWEL-GRY-L", "qty": 1, "unit_price": 1200}
+    ],
+    "total": 4800
+  },
+  {
+    "order_no": "SK-240003",
+    "ordered_at": "2026-10-01T11:05:00+09:00",
+    "updated_at": "2026-10-01T15:30:00+09:00",
+    "status": "SHIPPED",
+    "shipping": {"prefecture": "北海道"},
+    "items": [
+      {"sku": "BTL-500", "qty": 1, "unit_price": 2400}
+    ],
+    "total": 2400
+  }
+]

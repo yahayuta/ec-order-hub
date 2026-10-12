@@ -1,0 +1,36 @@
+[
+  {
+    "id": "KM-0001",
+    "created": "2026/10/01 10:05:00",
+    "modified": "2026/10/01 10:05:00",
+    "state": "paid",
+    "pref": "東京都",
+    "lines": [
+      {"item_code": "ＭＵＧ－ＲＥＤ－０１", "quantity": "２", "price": "1,980円"}
+    ],
+    "amount": "3,960円"
+  },
+  {
+    "id": "KM-0002",
+    "created": "2026/10/01 12:20:00",
+    "modified": "2026/10/01 12:20:00",
+    "state": "paid",
+    "pref": "福岡県",
+    "lines": [
+      {"item_code": "TOWEL-WHT-L", "quantity": "2", "price": "1,200円"},
+      {"item_code": "BTL-500", "quantity": "1", "price": "2,000円"}
+    ],
+    "amount": "5,000円"
+  },
+  {
+    "id": "KM-0003",
+    "created": "2026/10/01 13:45:00",
+    "modified": "2026/10/01 14:00:00",
+    "state": "on_hold",
+    "pref": "愛知県",
+    "lines": [
+      {"item_code": "MUG-BLU-01", "quantity": "1", "price": "¥1,980"}
+    ],
+    "amount": "1,980円"
+  }
+]

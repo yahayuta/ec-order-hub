@@ -1,0 +1,28 @@
+# Local run: PostgreSQL + the app with the fictional marketplaces served by the app itself.
+#   docker compose up --build
+#   curl -X POST localhost:8080/api/imports/sakura
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: orderhub
+      POSTGRES_USER: orderhub
+      POSTGRES_PASSWORD: orderhub
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orderhub"]
+      interval: 2s
+      retries: 30
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: mock
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/orderhub
+      ORDERHUB_SCHEDULER_ENABLED: "true"
+    ports:
+      - "8080:8080"
