@@ -1,0 +1,9 @@
+target/
+.idea/
+*.iml
+.vscode/
+.DS_Store
+infra/aws/.terraform/
+infra/aws/.terraform.lock.hcl
+infra/aws/*.tfstate*
+infra/aws/*.tfvars
