@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: orderhub
+          POSTGRES_USER: orderhub
+          POSTGRES_PASSWORD: orderhub
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U orderhub"
+          --health-interval 2s
+          --health-retries 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - name: Build and test (unit + integration against PostgreSQL)
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/orderhub
+        run: mvn -B verify
+      - name: Test summary
+        if: always()
+        run: |
+          echo "| Test class | Tests | Failures | Errors | Skipped |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          for f in target/surefire-reports/TEST-*.xml; do
+            python3 - "$f" >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          import sys, xml.etree.ElementTree as ET
+          s = ET.parse(sys.argv[1]).getroot()
+          print(f"| {s.get('name').split('.')[-1]} | {s.get('tests')} | {s.get('failures')} | {s.get('errors')} | {s.get('skipped')} |")
+          EOF
+          done
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the container image
+        run: docker build -t ec-order-hub:ci .
+
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/aws
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false
+      - run: terraform validate
